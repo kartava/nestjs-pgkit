@@ -1,3 +1,5 @@
+import { Type, ModuleMetadata } from "@nestjs/common";
+
 export interface PGKitOptions {
   connectionUri: string;
 }
@@ -30,4 +32,21 @@ export interface PGKitModuleOptions extends PGKitOptions {
    * Default: 3000
    */
   retryDelay?: number;
+}
+
+export interface PGKitOptionsFactory {
+  createPgKitOptions(
+    clientName?: string,
+  ): Promise<PGKitModuleOptions> | PGKitModuleOptions;
+}
+
+export interface PGKitModuleAsyncOptions
+  extends Pick<ModuleMetadata, "imports"> {
+  name?: string;
+  useExisting?: Type<PGKitOptionsFactory>;
+  useClass?: Type<PGKitOptionsFactory>;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<PGKitModuleOptions> | PGKitModuleOptions;
+  inject?: any[];
 }

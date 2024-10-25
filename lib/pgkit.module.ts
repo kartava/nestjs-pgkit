@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from "@nestjs/common";
 
-import { PGKitModuleOptions } from "./interfaces";
+import { PGKitModuleAsyncOptions, PGKitModuleOptions } from "./interfaces";
 import { PGKitCoreModule } from "./pgkit-core.module";
 
 @Module({})
@@ -9,6 +9,13 @@ export class PGKitModule {
     return {
       module: PGKitModule,
       imports: [PGKitCoreModule.forRoot(options)],
+    };
+  }
+
+  static forRootAsync(options: PGKitModuleAsyncOptions): DynamicModule {
+    return {
+      module: PGKitModule,
+      imports: [PGKitCoreModule.forRootAsync(options)],
     };
   }
 }
