@@ -1,8 +1,11 @@
 {
   "name": "nestjs-pgkit",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "Pgkit module for NestJS",
-  "repository": "https://github.com/kartava/nestjs-pgkit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kartava/nestjs-pgkit.git"
+  },
   "keywords": [
     "nest",
     "nestjs",
@@ -16,9 +19,14 @@
     "lint": "eslint 'lib/**/*.ts' --fix",
     "prepare": "husky",
     "test:e2e": "jest --config ./tests/jest-e2e.json --runInBand",
-    "test:e2e:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch"
+    "test:e2e:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public",
+    "prepublish:next": "npm run build",
+    "publish:next": "npm publish --access public --tag next",
+    "prerelease": "npm run build",
+    "release": "release-it"
   },
-  "dependencies": {},
   "devDependencies": {
     "@nestjs/common": "10.4.6",
     "@nestjs/core": "10.4.6",
@@ -51,6 +59,11 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0"
   },
+  "files": [
+    "/dist",
+    "index.js",
+    "index.d.ts"
+  ],
   "lint-staged": {
     "*.{ts}": [
       "bash -c 'tsc --noEmit'",
