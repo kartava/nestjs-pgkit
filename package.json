@@ -1,7 +1,7 @@
 {
   "name": "nestjs-pgkit",
   "version": "0.9.0",
-  "description": "Pgkit module for NestJS",
+  "description": "PgKit module for NestJS",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kartava/nestjs-pgkit.git"

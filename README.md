@@ -4,13 +4,6 @@
 [pgkit](https://www.pgkit.dev/) module
 for [Nest](https://github.com/nestjs/nest).
 
-## Status
-
-🚧 **Under Development** 🚧
-
-- Features and functionality are still being actively worked on.
-- Expect breaking changes until an initial stable release.
-
 ## Contents
 * [nestjs-pgkit](#nestjs-pgkit)
     * [Installation](#installation)
@@ -25,13 +18,13 @@ for [Nest](https://github.com/nestjs/nest).
 ###### npm
 
 ```bash
-TBA
+npm i --save nestjs-pgkit @pgkit/client
 ```
 
 ###### yarn
 
 ```bash
-TBA
+yarn add nestjs-pgkit @pgkit/client
 ```
 
 <a name="basic-import"></a>
