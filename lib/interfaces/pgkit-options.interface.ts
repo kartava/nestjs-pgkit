@@ -1,10 +1,10 @@
 import { Type, ModuleMetadata } from "@nestjs/common";
 
-export interface PGKitOptions {
+export interface PgKitOptions {
   connectionUri: string;
 }
 
-export interface PGKitModuleOptions extends PGKitOptions {
+export interface PgKitModuleOptions extends PgKitOptions {
   /**
    * Connection client name
    */
@@ -34,19 +34,19 @@ export interface PGKitModuleOptions extends PGKitOptions {
   retryDelay?: number;
 }
 
-export interface PGKitOptionsFactory {
+export interface PgKitOptionsFactory {
   createPgKitOptions(
     clientName?: string,
-  ): Promise<PGKitModuleOptions> | PGKitModuleOptions;
+  ): Promise<PgKitModuleOptions> | PgKitModuleOptions;
 }
 
-export interface PGKitModuleAsyncOptions
+export interface PgKitModuleAsyncOptions
   extends Pick<ModuleMetadata, "imports"> {
   name?: string;
-  useExisting?: Type<PGKitOptionsFactory>;
-  useClass?: Type<PGKitOptionsFactory>;
+  useExisting?: Type<PgKitOptionsFactory>;
+  useClass?: Type<PgKitOptionsFactory>;
   useFactory?: (
     ...args: any[]
-  ) => Promise<PGKitModuleOptions> | PGKitModuleOptions;
+  ) => Promise<PgKitModuleOptions> | PgKitModuleOptions;
   inject?: any[];
 }

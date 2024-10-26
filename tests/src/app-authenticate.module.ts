@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
-import { PGKitModule } from "../../lib";
+import { PgKitModule } from "../../lib";
 
 import { postgresInvalidConnectionUri } from "./albums/configs/database.config";
 
 @Module({
   imports: [
-    PGKitModule.forRoot({
+    PgKitModule.forRoot({
       connectionUri: postgresInvalidConnectionUri,
       retryAttempts: 1,
       retryDelay: 1000,

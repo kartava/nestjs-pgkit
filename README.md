@@ -37,17 +37,17 @@ TBA
 <a name="basic-import"></a>
 ### Basic import
 
-Once the installation process is complete, we can import the `PGKitModule` into the root `AppModule`.
+Once the installation process is complete, we can import the `PgKitModule` into the root `AppModule`.
 
 
 > app.module.ts
 ```typescript
 import { Module } from "@nestjs/common";
-import { PGKitModule } from "nestjs-pgkit";
+import { PgKitModule } from "nestjs-pgkit";
 
 @Module({
   imports: [
-    PGKitModule.forRoot({
+    PgKitModule.forRoot({
       connectionUri: "postgres://user:password@localhost:5432/test",
     }),
   ],
@@ -59,14 +59,14 @@ The `forRoot()` method supports configuration properties described below.
 
 <table>
   <tr>
-    <td colspan='2'><b>PGKit options</b></td>
+    <td colspan='2'><b>PgKit options</b></td>
   </tr>
   <tr>
     <td><code>connectionUri</code></td>
     <td><a href='https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING'>Connection URI</a></td>
   </tr>
   <tr>
-    <td colspan='2'><b>PGKitModule options</b></td>
+    <td colspan='2'><b>PgKitModule options</b></td>
   </tr>
   <tr>
     <td><code>name</code></td>
@@ -124,10 +124,10 @@ To work with multiple clients, first create the clients. In this case, client na
 ```typescript
 @Module({
   imports: [
-    PGKitModule.forRoot({
+    PgKitModule.forRoot({
       connectionUri: "postgres://user:password@users_db_host:5432/users",
     }),
-    PGKitModule.forRoot({
+    PgKitModule.forRoot({
       name: "ALBUMS_CLIENT",
       connectionUri: "postgres://user:password@albums_db_host:5432/albums",
     }),
@@ -156,13 +156,13 @@ export class AlbumsService {
 <a name="async-configuration"></a>
 ### Async configuration
 
-You may want to pass your `PGKitModule` options asynchronously instead of statically.
+You may want to pass your `PgKitModule` options asynchronously instead of statically.
 In this case, use the `forRootAsync()` method, which provides several ways to deal with async configuration.
 
 One approach is to use a factory function:
 
 ```typescript
-PGKitModule.forRootAsync({
+PgKitModule.forRootAsync({
   useFactory: () => ({
     connectionUri: "postgres://user:password@users_db_host:5432/users",
   }),
@@ -173,7 +173,7 @@ Our factory behaves like any other [asynchronous provider](https://docs.nestjs.c
 (e.g., it can be `async` and it's able to inject dependencies through `inject`).
 
 ```typescript
-PGKitModule.forRootAsync({
+PgKitModule.forRootAsync({
   imports: [ConfigModule],
   useFactory: (configService: ConfigService) => ({
     connectionUri: configService.get("DATABASE_URL"),
@@ -185,19 +185,19 @@ PGKitModule.forRootAsync({
 Alternatively, you can use the `useClass` syntax:
 
 ```typescript
-PGKitModule.forRootAsync({
-  useClass: PGKItConfigService,
+PgKitModule.forRootAsync({
+  useClass: PgKitConfigService,
 });
 ```
 
-The construction above will instantiate `PGKitConfigService` inside `PGKitModule` and use it to provide
-an options object by calling `createPgKitOptions()`. Note that this means that the `PGKitConfigService`
-has to implement the `PGKitOptionsFactory` interface, as shown below:
+The construction above will instantiate `PgKitConfigService` inside `PgKitModule` and use it to provide
+an options object by calling `createPgKitOptions()`. Note that this means that the `PgKitConfigService`
+has to implement the `PgKitOptionsFactory` interface, as shown below:
 
 ```typescript
 @Injectable()
-class PGKitConfigService implements PGKitOptionsFactory {
-  createPgKitOptions(): PGKitModuleOptions {
+class PgKitConfigService implements PgKitOptionsFactory {
+  createPgKitOptions(): PgKitModuleOptions {
     return {
       connectionUri: "postgres://user:password@users_db_host:5432/users",
     };
@@ -205,23 +205,23 @@ class PGKitConfigService implements PGKitOptionsFactory {
 }
 ```
 
-In order to prevent the creation of `PGKitConfigService` inside `PGKitModule` and use a provider imported
+In order to prevent the creation of `PgKitConfigService` inside `PgKitModule` and use a provider imported
 from a different module, you can use the `useExisting` syntax.
 
 ```typescript
-PGKitModule.forRootAsync({
+PgKitModule.forRootAsync({
   imports: [ConfigModule],
   useExisting: ConfigService,
 });
 ```
 
-This construction works the same as `useClass` with one critical difference - `PGKitModule` will lookup
+This construction works the same as `useClass` with one critical difference - `PgKitModule` will lookup
 imported modules to reuse an existing `ConfigService` instead of instantiating a new one.
 
 > Make sure that the `name` property is defined at the same level as the `useFactory`, `useClass`, or
 > `useValue` property. This will allow Nest to properly register the pool under the appropriate injection token.
 ```typescript
-PGKitModule.forRootAsync({
+PgKitModule.forRootAsync({
   name: "ALBUMS_CLIENT",
   useFactory: () => ({
     connectionUri: postgresConnectionUri,

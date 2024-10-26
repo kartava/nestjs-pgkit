@@ -8,7 +8,7 @@ import { ApplicationModule } from "../src/app.module";
 import { routes } from "../src/albums/configs/app.routes";
 import { CreateAlbumProps } from "../src/albums/albums.types";
 
-describe("PGKit", () => {
+describe("PgKit", () => {
   let server: Server;
   let app: INestApplication;
 

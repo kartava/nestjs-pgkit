@@ -7,7 +7,7 @@ import { routes } from "../src/albums/configs/app.routes";
 import { AsyncApplicationModule } from "../src/app-async.module";
 import { CreateAlbumProps } from "../src/albums/albums.types";
 
-describe("PGKit (async configuration)", () => {
+describe("PgKit (async configuration)", () => {
   let server: Server;
   let app: INestApplication;
 

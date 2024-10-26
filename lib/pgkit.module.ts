@@ -1,21 +1,21 @@
 import { DynamicModule, Module } from "@nestjs/common";
 
-import { PGKitModuleAsyncOptions, PGKitModuleOptions } from "./interfaces";
-import { PGKitCoreModule } from "./pgkit-core.module";
+import { PgKitModuleAsyncOptions, PgKitModuleOptions } from "./interfaces";
+import { PgKitCoreModule } from "./pgkit-core.module";
 
 @Module({})
-export class PGKitModule {
-  static forRoot(options: PGKitModuleOptions): DynamicModule {
+export class PgKitModule {
+  static forRoot(options: PgKitModuleOptions): DynamicModule {
     return {
-      module: PGKitModule,
-      imports: [PGKitCoreModule.forRoot(options)],
+      module: PgKitModule,
+      imports: [PgKitCoreModule.forRoot(options)],
     };
   }
 
-  static forRootAsync(options: PGKitModuleAsyncOptions): DynamicModule {
+  static forRootAsync(options: PgKitModuleAsyncOptions): DynamicModule {
     return {
-      module: PGKitModule,
-      imports: [PGKitCoreModule.forRootAsync(options)],
+      module: PgKitModule,
+      imports: [PgKitCoreModule.forRootAsync(options)],
     };
   }
 }

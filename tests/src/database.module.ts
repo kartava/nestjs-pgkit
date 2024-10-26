@@ -1,5 +1,5 @@
 import { DynamicModule, Module } from "@nestjs/common";
-import { PGKitModule } from "../../lib";
+import { PgKitModule } from "../../lib";
 
 import { ALBUMS_NAMED_CLIENT } from "./albums/albums.di-tokens";
 import { postgresConnectionUri } from "./albums/configs/database.config";
@@ -11,12 +11,12 @@ export class DatabaseModule {
     return {
       module: DatabaseModule,
       imports: [
-        PGKitModule.forRoot({
+        PgKitModule.forRoot({
           connectionUri: postgresConnectionUri,
           retryAttempts: 2,
           retryDelay: 1000,
         }),
-        PGKitModule.forRoot({
+        PgKitModule.forRoot({
           name: ALBUMS_NAMED_CLIENT,
           connectionUri: postgresConnectionUri,
           retryAttempts: 2,

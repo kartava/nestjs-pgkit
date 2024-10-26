@@ -4,23 +4,23 @@ import { Logger } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { delay, retryWhen, scan } from "rxjs/operators";
 
-import { PGKitModuleOptions } from "../interfaces";
+import { PgKitModuleOptions } from "../interfaces";
 import { DEFAULT_CLIENT_NAME, LOGGER_CONTEXT } from "../pgkit.constants";
 
 const logger = new Logger(LOGGER_CONTEXT);
 
-export function getClientName(options: PGKitModuleOptions): string {
+export function getClientName(options: PgKitModuleOptions): string {
   return options && options.name ? options.name : DEFAULT_CLIENT_NAME;
 }
 
 /**
- * This function returns a Client injection token for the given PGKitModuleOptions or client name.
- * @param options {PGKitModuleOptions | string} [options='default'] This optional parameter is either
- * a PGKitModuleOptions or a string.
+ * This function returns a Client injection token for the given PgKitModuleOptions or client name.
+ * @param options {PgKitModuleOptions | string} [options='default'] This optional parameter is either
+ * a PgKitModuleOptions or a string.
  * @returns {string} The Client injection token.
  */
 export function getClientToken(
-  options: PGKitModuleOptions | string = DEFAULT_CLIENT_NAME,
+  options: PgKitModuleOptions | string = DEFAULT_CLIENT_NAME,
 ): string {
   const name = typeof options === "string" ? options : getClientName(options);
 

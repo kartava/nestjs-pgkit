@@ -14,9 +14,9 @@ import { defer, lastValueFrom } from "rxjs";
 import { Client, createClient } from "@pgkit/client";
 
 import {
-  PGKitModuleAsyncOptions,
-  PGKitModuleOptions,
-  PGKitOptionsFactory,
+  PgKitModuleAsyncOptions,
+  PgKitModuleOptions,
+  PgKitOptionsFactory,
 } from "./interfaces";
 import {
   generateRandomString,
@@ -32,12 +32,12 @@ import {
 
 @Global()
 @Module({})
-export class PGKitCoreModule implements OnApplicationShutdown {
+export class PgKitCoreModule implements OnApplicationShutdown {
   private readonly logger = new Logger(LOGGER_CONTEXT);
 
   constructor(
     @Inject(PG_KIT_MODULE_OPTIONS)
-    private readonly options: PGKitModuleOptions,
+    private readonly options: PgKitModuleOptions,
     private readonly moduleRef: ModuleRef,
   ) {}
 
@@ -50,7 +50,7 @@ export class PGKitCoreModule implements OnApplicationShutdown {
     }
   }
 
-  static forRoot(options: PGKitModuleOptions): DynamicModule {
+  static forRoot(options: PgKitModuleOptions): DynamicModule {
     const pgKitOptions = {
       provide: PG_KIT_MODULE_OPTIONS,
       useValue: options,
@@ -61,16 +61,16 @@ export class PGKitCoreModule implements OnApplicationShutdown {
     };
 
     return {
-      module: PGKitCoreModule,
+      module: PgKitCoreModule,
       providers: [clientProvider, pgKitOptions],
       exports: [clientProvider],
     };
   }
 
-  static forRootAsync(options: PGKitModuleAsyncOptions): DynamicModule {
+  static forRootAsync(options: PgKitModuleAsyncOptions): DynamicModule {
     const clientProvider = {
-      provide: getClientToken(options as PGKitModuleOptions),
-      useFactory: async (pgKitOptions: PGKitModuleOptions) => {
+      provide: getClientToken(options as PgKitModuleOptions),
+      useFactory: async (pgKitOptions: PgKitModuleOptions) => {
         if (options.name) {
           return this.createClientFactory({
             ...pgKitOptions,
@@ -84,7 +84,7 @@ export class PGKitCoreModule implements OnApplicationShutdown {
 
     const asyncProviders = this.createAsyncProviders(options);
     return {
-      module: PGKitCoreModule,
+      module: PgKitCoreModule,
       imports: options.imports,
       providers: [
         ...asyncProviders,
@@ -99,12 +99,12 @@ export class PGKitCoreModule implements OnApplicationShutdown {
   }
 
   private static createAsyncProviders(
-    options: PGKitModuleAsyncOptions,
+    options: PgKitModuleAsyncOptions,
   ): Provider[] {
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
     }
-    const useClass = options.useClass as Type<PGKitOptionsFactory>;
+    const useClass = options.useClass as Type<PgKitOptionsFactory>;
     return [
       this.createAsyncOptionsProvider(options),
       {
@@ -115,7 +115,7 @@ export class PGKitCoreModule implements OnApplicationShutdown {
   }
 
   private static createAsyncOptionsProvider(
-    options: PGKitModuleAsyncOptions,
+    options: PgKitModuleAsyncOptions,
   ): Provider {
     if (options.useFactory) {
       return {
@@ -126,18 +126,18 @@ export class PGKitCoreModule implements OnApplicationShutdown {
     }
     // `as Type<TypeOrmOptionsFactory>` is a workaround for microsoft/TypeScript#31603
     const inject = [
-      (options.useClass || options.useExisting) as Type<PGKitOptionsFactory>,
+      (options.useClass || options.useExisting) as Type<PgKitOptionsFactory>,
     ];
     return {
       provide: PG_KIT_MODULE_OPTIONS,
-      useFactory: async (optionsFactory: PGKitOptionsFactory) =>
+      useFactory: async (optionsFactory: PgKitOptionsFactory) =>
         optionsFactory.createPgKitOptions(options.name),
       inject,
     };
   }
 
   private static async createClientFactory(
-    options: PGKitModuleOptions,
+    options: PgKitModuleOptions,
   ): Promise<Client> {
     const clientToken = getClientName(options);
 
