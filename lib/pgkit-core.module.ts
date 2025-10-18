@@ -143,7 +143,10 @@ export class PgKitCoreModule implements OnApplicationShutdown {
 
     return await lastValueFrom(
       defer(async () => {
-        const dbClient = createClient(options.connectionUri);
+        const dbClient = createClient(
+          options.connectionUri,
+          options.clientOptions,
+        );
 
         // try to connect to database to catch errors if database is not reachable
         await dbClient.connect(() => Promise.resolve());

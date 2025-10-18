@@ -1,7 +1,9 @@
 import { Type, ModuleMetadata } from "@nestjs/common";
+import { ClientOptions } from "@pgkit/client/src/types";
 
 export interface PgKitOptions {
   connectionUri: string;
+  clientOptions?: ClientOptions;
 }
 
 export interface PgKitModuleOptions extends PgKitOptions {
