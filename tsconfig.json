@@ -3,7 +3,7 @@
     "module": "commonjs",
     "declaration": true,
     "strict": true,
-    "removeComments": true,
+    "removeComments": false,
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -11,7 +11,7 @@
     "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "./lib",
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
   "include": [
     "lib/**/*"
@@ -19,6 +19,6 @@
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
-    "tests"
+    "tests",
   ]
 }
